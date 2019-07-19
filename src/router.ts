@@ -25,28 +25,28 @@ export default new Router({
         {
           path: 'spare',
           name: 'Spare Part',
-          component: () => import('./views/About.vue'),
+          component: () => import('./views/spare/spare.vue'),
         },
         {
           path: 'oil',
           name: 'Oil',
-          component: () => import('./views/About.vue'),
+          component: () => import('./views/oil/oil.vue'),
         },
         {
           path: '*',
-          redirect: '/404'
+          redirect: '/app'
         },
       ]
     },
     {
       path: '/Dashboard',
       name: 'Dashboard',
-      component: () => import('./views/About.vue'),
+      component: () => import('./views/dashboard.vue'),
     },
     {
       path: '/Admin',
       name: 'Admin',
-      component: () => import('./views/About.vue'),
+      component: () => import('./views/admin/admin.vue'),
     },
     {
       path: '/login',
@@ -55,7 +55,11 @@ export default new Router({
     },
     {
       path: '/404',
-      component: () => import('./views/error.vue')
+      component: () => import('./views/error/404.vue')
+    },
+    {
+      path: '/401',
+      component: () => import('./views/error/401.vue')
     },
     {
       path: '*',

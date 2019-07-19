@@ -75,6 +75,8 @@
 </template>
 
 <script>
+// import Dashboard from 'dirk';
+// import color from '@/app/panel/color'
 import Cookies from 'js-cookie';
 import {AppService} from '../service/app';
 
