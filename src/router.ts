@@ -10,16 +10,56 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home,
+      redirect: '/app'
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      path: '/app',
+      name: 'home',
+      component: Home,
+      children: [
+        {
+          path: 'stock',
+          name: 'Stock',
+          component: () => import('./views/stock/stock.vue'),
+        },
+        {
+          path: 'spare',
+          name: 'Spare Part',
+          component: () => import('./views/About.vue'),
+        },
+        {
+          path: 'oil',
+          name: 'Oil',
+          component: () => import('./views/About.vue'),
+        },
+        {
+          path: '*',
+          redirect: '/404'
+        },
+      ]
     },
-  ],
+    {
+      path: '/Dashboard',
+      name: 'Dashboard',
+      component: () => import('./views/About.vue'),
+    },
+    {
+      path: '/Admin',
+      name: 'Admin',
+      component: () => import('./views/About.vue'),
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('./views/login.vue'),
+    },
+    {
+      path: '/404',
+      component: () => import('./views/error.vue')
+    },
+    {
+      path: '*',
+      redirect: '/404'
+    }
+  ]
 });
