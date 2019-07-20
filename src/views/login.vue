@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <v-snackbar v-model="lfalse" :color="error" :timeout="3000" top> {{ errormsg }} </v-snackbar>
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
@@ -48,10 +49,7 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
     </el-form>
-    <el-dialog title="Login False" :visible.sync="lfalse">
-      Username or Password is worng  
-      <br>
-    </el-dialog>
+    
   </div>
 
 </template>
@@ -95,7 +93,8 @@ export default {
       redirect: undefined,
       otherQuery: {},
       lfalse: false,
-      accessToken: Cookies.get('accessToken') || null
+      errormsg: '',
+      accessToken: Cookies.get('accessToken')
     }
   },
   watch: {
@@ -156,21 +155,25 @@ export default {
           this.loading = true
           authentication.login(this.loginForm)
           .then((data) => {
-            // alert(data.accessToken);
-            this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-            console.log(data)
-            Cookies.set('accessToken', data, { expires: 1 });
+            const accessToken = data.data.accessToken;
+            const xconf = data.config.data
+            // alert(JSON.stringify(accessToken));
+            // console.log(JSON.stringify(xconf))
+            Cookies.set('conf', xconf, { expires: 1 });
+            Cookies.set('accessToken', accessToken, { expires: 1 });
             this.loading = false
+            this.$router.push({ path: this.redirect || '/app', query: this.otherQuery })
           })
           .catch((error) => {
-              console.log(error)
               this.lfalse = true;
-              // alert("Login false");
+              this.errormsg = 'Error: ' + error.response.data;
               this.loading = false;
             })
 
         } else {
-          console.log('error submit!!')
+          // console.log('error submit!!')
+          this.lfalse = true;
+          this.errormsg = 'Error: Data submitted do not complete';
           return false
         }
       })

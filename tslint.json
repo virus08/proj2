@@ -10,6 +10,8 @@
     ]
   },
   "rules": {
+    // "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-empty": false,
     "quotemark": [true, "single"],
     "indent": [true, "spaces", 2],
     "interface-name": false,
@@ -19,7 +21,7 @@
     "trailing-comma": false,
     "semicolon": false,
     "object-literal-shorthand": false,
-    "arrow-parens": ["error", "always"],
-    "no-console": ["error", { "allow": ["warn", "error"] }]
+    "arrow-parens": ["error", "always"]
+    
   }
 }
