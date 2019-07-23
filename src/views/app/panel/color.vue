@@ -1,14 +1,16 @@
 <template>
-  <div :style="{ backgroundColor: color }"></div>
+  <div class="container"/>
 </template>
 
 <script>
   export default {
-    props: {
-      color: {
-        type: String,
-        required: true,
-      },
-    },
   };
 </script>
+<style lang="scss" rel="stylesheet/scss">
+  .container {
+    margin: 1px auto;
+    width: 100%;
+    height: 440px;
+    background-color: green;
+  }
+</style>

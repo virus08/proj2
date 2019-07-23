@@ -3,7 +3,10 @@
     <v-navigation-drawer v-model="drawerRight" fixed right clipped app>
       <v-layout justify-center>
         <v-flex xs12 >
-          <v-card>
+            <v-img id="profiles"
+              :src="dataUrl"
+              height="280px"
+            ></v-img>   
             <v-list>
               <v-divider inset></v-divider>
               <v-list-tile @click="bank">
@@ -24,11 +27,7 @@
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
-            <v-img id="profiles"
-              :src="dataUrl"
-              height="280px"
-            ></v-img>         
-          </v-card>
+            <v-divider inset></v-divider> 
         </v-flex>
       </v-layout>
       <v-list dense>
@@ -86,13 +85,7 @@
       fixed
     ></v-navigation-drawer>
     <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center>
-          <v-flex shrink>
-            <router-view/>
-          </v-flex>
-        </v-layout>
-      </v-container>
+      <router-view/>
     </v-content>
     <v-navigation-drawer
       v-model="right"
@@ -101,9 +94,9 @@
       fixed
     ></v-navigation-drawer>
     <v-footer color="blue-grey" class="white--text" app>
-      <span>Fuangmali</span>
+      <span>&nbsp;Fuangmali</span>
       <v-spacer></v-spacer>
-      <span>&copy; 2019-2010</span>
+      <span>&copy; 2019-2010&nbsp;</span>
     </v-footer>
   </v-app>
 </template>
@@ -161,8 +154,7 @@ export default {
     },
     computed: {
       dataUrl() {
-        return 'data:image/jpeg;base64,' + this.me.picture
-      }
+        return 'data:image/jpg+xml;base64,' + this.me.picture}
     }
   }
 </script>

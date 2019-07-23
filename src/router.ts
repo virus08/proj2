@@ -18,6 +18,15 @@ export default new Router({
       component: Home,
       children: [
         {
+          path: '/',
+          redirect: '/app/main'
+        },
+        {
+          path: 'main',
+          name: 'main',
+          component: () => import('./views/main/main.vue'),
+        },
+        {
           path: 'stock',
           name: 'Stock',
           component: () => import('./views/stock/stock.vue'),
