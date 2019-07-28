@@ -27,21 +27,6 @@ export default new Router({
           component: () => import('./views/main/main.vue'),
         },
         {
-          path: 'stock',
-          name: 'Stock',
-          component: () => import('./views/stock/stock.vue'),
-        },
-        {
-          path: 'spare',
-          name: 'Spare Part',
-          component: () => import('./views/spare/spare.vue'),
-        },
-        {
-          path: 'oil',
-          name: 'Oil',
-          component: () => import('./views/oil/oil.vue'),
-        },
-        {
           path: '*',
           redirect: '/app'
         },

@@ -105,8 +105,8 @@
 // import Dashboard from 'dirk';
 // import color from '@/app/panel/color'
 import Cookies from 'js-cookie';
-import {AppService} from '../service/app';
-import {ProfileService} from '../service/profiles';
+import {AppService} from '@/service/app';
+import {ProfileService} from '@/service/profiles';
 
 const appservice = new AppService();
 const profileservice  = new ProfileService();
@@ -130,7 +130,6 @@ export default {
       // this.$router.push({ path: this.redirect || '/login' })
       if (this.accessToken) {
         appservice.appSeting().then( res => {
-          // console.log(res.data[0]);
           this.appseting = res.data[0];
         });
       } else {
@@ -138,14 +137,27 @@ export default {
       }
     },
     mounted() {
-      profileservice.me().then( res => {
-          // console.log(res.data[0]);
-          this.me = res.data[0];
-        });
+      profileservice.me()
+      .then(res => {
+        this.me = res.data[0];
+        window.ME = this.me;
+      })
     },
     methods: {
+      reget() {
+        profileservice.me()
+          .then(res => {
+            this.me = res.data[0];
+            window.ME = this.me;
+          })
+          .catch(() => {
+            this.reget();
+        });
+      },
       logOut() {
         Cookies.remove('accessToken');
+        Cookies.remove('loginid');
+        Cookies.remove('ME');
         this.$router.push({ path: this.redirect || '/login' })
       },
       bank() {

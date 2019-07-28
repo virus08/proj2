@@ -1,39 +1,38 @@
 import axios from 'axios';
 const API_URL = 'http://localhost:8000';
 import Cookies from 'js-cookie';
-
-const accessToken = Cookies.get('accessToken');
-
-import {AuthenService} from './authen'
-const authentication = new AuthenService();
-
-// console.log(xdata.config.data)
-// authentication.relogin(JSON.parse(xdata.config.data)).then((data)=>{
-//     Cookies.set('accessToken', data, { expires: 1 });
-// })
-
-// const API_URL = 'https://es-timesheet-api.azurewebsites.net';
 export class ProfileService {
     me() {
-        const url = `${API_URL}/me`;
-        // console.log(xdata);
+        const xme = JSON.parse(Cookies.get('loginid'));
+        const url = `${API_URL}/authen/me/`+ xme.username;
         const options = {
             method: 'GET',
-            headers: {'Authorization': "Bearer " + accessToken},
-            url: url,
-        };
+            headers: { 'Accept': 'application/json' },
+            url: url
+        }; 
+        return axios(options)
+    }
+    menu(role) {
+        // const xme = JSON.parse(Cookies.get('loginid'));
+        const url = `${API_URL}/app/menu/`+ role;
+        // console.log(url);
+        const options = {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' },
+            url: url
+        }; 
         return axios(options)
     }
     xme() {
         var defaultdata = {
             "id": 1, 
-            "firstname": "Wanchai",
-            "lastname": "Fuangmali",
-            "phone":"0650961419",
-            "jobtitle":"Pre-Sales",
-            "picture":"iVBORw0KGgoAAAANSUhEUgAAAB8AAAAaCAIAAADAARDdAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAApSURBVEhL7cwxAQAwDASh+jf9VcCY7RDA26V2aZd2aZd2aZd2aZfLffvBJWkWk3WXGwAAAABJRU5ErkJggg==",
-            "role":["Admin","Manager","Stocker","Oil","User"],
-            "userId": 1
+            "firstname": "",
+            "lastname": "",
+            "phone":"",
+            "jobtitle":"",
+            "picture":"/9j/4AAQSkZJRgABAQEAYABgAAD/4QBaRXhpZgAATU0AKgAAAAgABQMBAAUAAAABAAAASgMDAAEAAAABAAAAAFEQAAEAAAABAQAAAFERAAQAAAABAAAOw1ESAAQAAAABAAAOwwAAAAAAAYagAACxj//bAEMAAgEBAgEBAgICAgICAgIDBQMDAwMDBgQEAwUHBgcHBwYHBwgJCwkICAoIBwcKDQoKCwwMDAwHCQ4PDQwOCwwMDP/bAEMBAgICAwMDBgMDBgwIBwgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIAAEAAQMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP38ooooA//Z",
+            "role":"",
+            "userId": null
           }
         return defaultdata;
       }

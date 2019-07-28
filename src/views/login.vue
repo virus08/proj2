@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <v-snackbar v-model="lfalse" :color="error" :timeout="3000" top> {{ errormsg }} </v-snackbar>
+    <v-snackbar v-model="lfalse" color="error" :timeout="3000" top> {{ errormsg }} </v-snackbar>
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
@@ -149,6 +149,19 @@ export default {
         this.$refs.password.focus()
       })
     },
+    getMe() {
+      authentication.me(this.loginForm)
+        .then((data) => {
+          // console.log('mydata :' + JSON.stringify(data.data[0]));
+          window.ME = data.data[0];
+          // console.log(window.ME);
+          this.loading = false
+          this.$router.push({ path: this.redirect || '/app', query: this.otherQuery })
+        })
+        .catch(() => {
+          this.getMe()
+        })
+    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -156,18 +169,17 @@ export default {
           authentication.login(this.loginForm)
           .then((data) => {
             const accessToken = data.data.accessToken;
-            const xconf = data.config.data
-            // alert(JSON.stringify(accessToken));
-            // console.log(JSON.stringify(xconf))
-            Cookies.set('conf', xconf, { expires: 1 });
+            // const xconf = data.config.data
             Cookies.set('accessToken', accessToken, { expires: 1 });
-            this.loading = false
-            this.$router.push({ path: this.redirect || '/app', query: this.otherQuery })
+            Cookies.set('loginid', this.loginForm , { expires: 1 });
+            this.getMe();
           })
           .catch((error) => {
-              this.lfalse = true;
-              this.errormsg = 'Error: ' + error.response.data;
-              this.loading = false;
+              if (error) {
+                this.lfalse = true;
+                this.errormsg = 'Error: ' + error.response.data;
+                this.loading = false;
+              }
             })
 
         } else {
